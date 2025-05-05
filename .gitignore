@@ -1,0 +1,32 @@
+# Build output
+/target/
+/build/
+
+# IntelliJ IDE
+/.idea/
+/*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Maven
+/.mvn/
+/.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot DevTools restart folder
+restart/*.cache
+
+# Others
+*.class
