@@ -1,0 +1,24 @@
+<!-- src/main/resources/templates/resultado.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado</title>
+</head>
+<body>
+<h1>Configuración leída</h1>
+<pre th:text="${config}">[config]</pre>
+
+<h1>Peticiones</h1>
+<ul>
+    <li th:each="p : ${peticiones}" th:text="${p}">[petición]</li>
+</ul>
+
+<div th:if="${incidencias}">
+    <h2>Incidencias</h2>
+    <ul>
+        <li th:each="i : ${incidencias}" th:text="${i}">[incidencia]</li>
+    </ul>
+</div>
+</body>
+</html>

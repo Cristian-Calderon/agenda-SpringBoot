@@ -5,12 +5,12 @@ import java.util.Locale;
 
 public class Config {
     private YearMonth periodo;
-    private Locale locale;
+    private Locale inLang, outLang;
 
-
-    public Config(YearMonth periodo, Locale locale) {
+    public Config(YearMonth periodo, Locale inLang, Locale outLang) {
         this.periodo = periodo;
-        this.locale = locale;
+        this.inLang = inLang;
+        this.outLang = outLang;
     }
 
     public YearMonth getPeriodo() {
@@ -21,21 +21,29 @@ public class Config {
         this.periodo = periodo;
     }
 
-    public Locale getLocale() {
-        return locale;
+    public Locale getInLang() {
+        return inLang;
     }
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setInLang(Locale inLang) {
+        this.inLang = inLang;
+    }
+
+    public Locale getOutLang() {
+        return outLang;
+    }
+
+    public void setOutLang(Locale outLang) {
+        this.outLang = outLang;
     }
 
     @Override
     public String toString() {
         return "Config{" +
                 "periodo=" + periodo +
-                ", locale=" + locale +
+                ", inLang=" + inLang +
+                ", outLang=" + outLang +
                 '}';
     }
-
 // getters/setters, constructor, toString…
 }
