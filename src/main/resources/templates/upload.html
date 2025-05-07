@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir archivos de agenda</title>
+</head>
+<body>
+<h1 th:text="#{upload.title}">Sube tu config.txt y peticiones.txt</h1>
+<form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="config">config.txt:</label>
+        <input type="file" id="config" name="configFile" accept=".txt" required>
+    </div>
+    <div>
+        <label for="peticiones">peticiones.txt:</label>
+        <input type="file" id="peticiones" name="requestsFile" accept=".txt" required>
+    </div>
+    <button type="submit" th:text="#{upload.button}">Procesar</button>
+</form>
+</body>
+</html>
