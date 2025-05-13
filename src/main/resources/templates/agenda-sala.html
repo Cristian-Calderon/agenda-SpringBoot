@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${sala} + ' - ' + ${periodo.getMonth()} + ' ' + ${periodo.getYear()}">Sala</title>
+    <style>
+        .ocupado { background:#ccc; }
+        .libre   { background:#fff; }
+        table { border-collapse: collapse; margin-bottom:20px; }
+        th, td { border:1px solid #666; width:2em; text-align:center; }
+        th.hour, td.hour { width:3em; }
+    </style>
+</head>
+<body>
+<h1 th:text="${sala}">Sala</h1>
+<h2 th:text="'Mes: ' + ${periodo.getMonth()} + ' ' + ${periodo.getYear()}">Mes</h2>
+
+<!-- Iteramos las semanas -->
+<div th:each="week : ${salas.semanas}">
+    <h3 th:text="'Semana desde ' + ${#temporals.format(week.start,'dd/MM/yyyy')}">Semana</h3>
+    <table>
+        <thead>
+        <tr>
+            <th class="hour">Hora</th>
+            <th th:each="d : ${T(java.time.DayOfWeek).values()}"
+                th:text="${d.getDisplayName(T(java.time.format.TextStyle).SHORT, #locale)}">D</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="h : ${#numbers.sequence(0,23)}">
+            <td class="hour"
+                th:text="${h + '-' + (h + 1)}">0-1</td>
+            <td th:each="d : ${T(java.time.DayOfWeek).values()}"
+                th:classappend="${week.actividad.get(d)[h]} != null ? 'ocupado' : 'libre'">
+                <span th:text="${week.actividad.get(d)[h]}"> </span>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<h2>Incidencias</h2>
+<ul>
+    <li th:each="inc : ${incidencias}"
+        th:text="${inc.descripcion}">Incidencia</li>
+</ul>
+</body>
+</html>

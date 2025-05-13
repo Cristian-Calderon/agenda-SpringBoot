@@ -5,6 +5,11 @@ public class Incidencia {
     private String sala;
     private String descripcion;   // “Solapamiento con Tancat”, etc.
 
+    public Incidencia(String sala, String descripcion) {
+        this.sala = sala;
+        this.descripcion = descripcion;
+    }
+
     public String getSala() {
         return sala;
     }
