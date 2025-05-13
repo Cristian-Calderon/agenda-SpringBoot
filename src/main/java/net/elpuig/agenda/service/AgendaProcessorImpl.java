@@ -89,15 +89,20 @@ public class AgendaProcessorImpl implements AgendaProcessor {
                         String[] hh = tramo.split("-");
                         int hi = Integer.parseInt(hh[0]), hf = Integer.parseInt(hh[1]);
                         for (int h = hi; h < hf; h++) {
-                            if (horas[h] != null) {
+                            String existingAct = horas[h];   // recogemos lo que ya había
+                            if (existingAct != null) {
                                 incidencias.add(new Incidencia(
                                         sala,
-                                        "Solapamiento de ‘" + p.getActividad() +
-                                                "’ el " + date + " a las " + h + "h"
+                                        p.getActividad(),   // la que queremos asignar
+                                        existingAct,        // la que ya estaba
+                                        date,               // fecha del conflicto
+                                        h,                  // hora del conflicto
+                                        1                   // duración (1h)
                                 ));
                             } else {
                                 horas[h] = p.getActividad();
                             }
+
                         }
                     }
                 }
