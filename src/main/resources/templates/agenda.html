@@ -56,8 +56,8 @@
 <!-- Incidencias al pie -->
 <h2>Incidencias Detectadas</h2>
 <ul>
-    <li th:each="inc : ${resultado.incidencias}"
-        th:text="${inc.descripcion}">[Descripción]</li>
+    <li th:each="inc : ${incidencias}"
+        th:text="${inc}">Incidencia</li>
 </ul>
 </body>
 </html>
