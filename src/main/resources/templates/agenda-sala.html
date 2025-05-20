@@ -2,21 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${sala} + ' - ' + ${periodo.getMonth()} + ' ' + ${periodo.getYear()}">Sala</title>
+    <title th:text="${sala} + ' - ' + ${periodo.month} + ' ' + ${periodo.year}">Sala</title>
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        .ocupado { background:#ccc; }
-        .libre   { background:#fff; }
-        table { border-collapse: collapse; margin-bottom:20px; }
-        th, td { border:1px solid #666; width:2em; text-align:center; }
-        th.hour, td.hour { width:3em; }
-        h2, h3 { margin-top:1em; }
+        /* Global font */
+        body, table {
+            font-family: 'Montserrat', sans-serif;
+        }
+        /* Header styling: light celeste */
+        th, th.hour, td.hour {
+            background-color: #e0f7fa;
+            font-weight: 600;
+            color: #01579b;
+        }
+        /* Cell backgrounds */
+        .closed   { background: #ccc; }
+        .free     { background: #dff0d8; }
+        .reserved { background: #fcf8e3; }
+        /* Table and cell basics */
+        table { border-collapse: collapse; margin-bottom: 1em; width: 100%; }
+        th, td { border: 1px solid #666; text-align: center; padding: 0.3em; }
+        th.hour, td.hour { width: 4em; }
+        h2, h3 { margin-top: 1em; font-weight: 600; color: #0277bd; }
     </style>
 </head>
 <body>
-<h1 th:text="${sala}">Sala</h1>
-<h2 th:text="'Mes: ' + ${periodo.getMonth()} + ' ' + ${periodo.getYear()}">Mes</h2>
+<h1 th:text="${sala}" style="font-weight: 600;">Sala</h1>
+<h2 th:text="'Mes: ' + ${periodo.month} + ' ' + ${periodo.year}">Mes</h2>
 
-<!-- Iteramos las semanas -->
 <div th:each="week : ${salas.semanas}">
     <h3 th:text="'Semana desde ' + ${#temporals.format(week.start,'dd/MM/yyyy')}">Semana</h3>
     <table>
@@ -24,24 +38,24 @@
         <tr>
             <th class="hour">0-1</th>
             <th th:each="d : ${T(java.time.DayOfWeek).values()}"
-                th:text="${d.getDisplayName(T(java.time.format.TextStyle).SHORT, #locale)}">D</th>
+                th:text="${d.getDisplayName(T(java.time.format.TextStyle).FULL, #locale)}">D</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="h : ${#numbers.sequence(0,23)}">
             <td class="hour" th:text="${h + '-' + (h+1)}">0-1</td>
             <td th:each="d : ${T(java.time.DayOfWeek).values()}"
-                th:classappend="${week.actividad.get(d)[h]} != null ? 'ocupado' : 'libre'">
-                <span th:text="${week.actividad.get(d)[h]}"> </span>
+                th:class="${week.actividad.get(d)[h] == 'Tancat' ? 'closed' : (week.actividad.get(d)[h] != null ? 'reserved' : 'free')}">
+            <span th:if="${week.actividad.get(d)[h] == 'Tancat'}"
+                  th:text="#{label.closed}">Tancat</span>
+                <span th:if="${week.actividad.get(d)[h] != null and week.actividad.get(d)[h] != 'Tancat'}"
+                      th:text="${week.actividad.get(d)[h]}">Actividad</span>
+                <span th:if="${week.actividad.get(d)[h] == null}"
+                      th:text="#{label.free}">Free</span>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-
-<h2>Incidencias</h2>
-<ul>
-    <li th:each="inc : ${incidencias}" th:text="${inc}">Incidencia</li>
-</ul>
 </body>
 </html>
